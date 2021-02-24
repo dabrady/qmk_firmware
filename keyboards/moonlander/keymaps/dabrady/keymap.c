@@ -6,12 +6,13 @@
 #define KC_MAC_COPY LGUI(KC_C)
 #define KC_MAC_PASTE LGUI(KC_V)
 
+#define SS_SPOTLIGHT SS_LGUI(SS_TAP(X_SPACE)) // MacOS Spotlight shortcut is CMD+SPACE
+
 enum custom_keycodes {
-  RGB_SLD = ML_SAFE_RANGE,
-  ST_MACRO_0,
-  ST_MACRO_1,
-  ST_MACRO_2,
-  ST_MACRO_3,
+  _SLACK_ = ML_SAFE_RANGE,
+  _CHROME_,
+  _ITERM2_,
+  _EMACS_,
 };
 
 enum layers {
@@ -29,9 +30,9 @@ enum tap_dance_codes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [BASE] = LAYOUT_moonlander(
-    KC_PERC,   KC_AMPR,   KC_LBRACKET, KC_LCBR, KC_LPRN,   KC_EQUAL, ST_MACRO_0,         TD(DANCE_1),    KC_GRAVE,     KC_RPRN,              KC_RCBR,    KC_RBRACKET, KC_EXLM, KC_HASH,
-    KC_QUOTE,  KC_SCOLON, KC_COMMA,    KC_DOT,  KC_P,      KC_Y,     ST_MACRO_1,         _______,        KC_F,         KC_G,                 KC_C,       KC_R,        KC_L,    KC_QUES,
-    KC_ESCAPE, KC_A,      KC_O,        KC_E,    KC_U,      KC_I,     ST_MACRO_2,         ST_MACRO_3,     KC_D,         KC_H,                 KC_T,       KC_N,        KC_S,    KC_MINUS,
+    KC_PERC,   KC_AMPR,   KC_LBRACKET, KC_LCBR, KC_LPRN,   KC_EQUAL, _SLACK_,            TD(DANCE_1),    KC_GRAVE,     KC_RPRN,              KC_RCBR,    KC_RBRACKET, KC_EXLM, KC_HASH,
+    KC_QUOTE,  KC_SCOLON, KC_COMMA,    KC_DOT,  KC_P,      KC_Y,     _CHROME_,           _______,        KC_F,         KC_G,                 KC_C,       KC_R,        KC_L,    KC_QUES,
+    KC_ESCAPE, KC_A,      KC_O,        KC_E,    KC_U,      KC_I,     _ITERM2_,           _EMACS_,     KC_D,         KC_H,                 KC_T,       KC_N,        KC_S,    KC_MINUS,
     KC_LSHIFT, _______,   KC_Q,        KC_J,    KC_K,      KC_X,                                         KC_B,         KC_M,                 KC_W,       KC_V,        KC_Z,    KC_RSHIFT,
     KC_LCTRL,  KC_LALT,   _______,     _______, KC_BSPACE,           TD(DANCE_0),        RGUI(KC_SPACE),               LT(NUMBERS,KC_SLASH), KC_BSLASH,  _______,     _______, LT(SPECIALS,KC_NO),
                                                         KC_ENTER, KC_LGUI, KC_AT,        KC_DLR, LT(NAVIGATION,KC_TAB), KC_SPACE
@@ -125,36 +126,35 @@ void rgb_matrix_indicators_user(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  // Handle macros and other specials
   switch (keycode) {
-    case ST_MACRO_0:
-    if (record->event.pressed) {
-      SEND_STRING(SS_LGUI(SS_TAP(X_SPACE)) SS_DELAY(100) SS_TAP(X_S) SS_DELAY(100) SS_TAP(X_L)  SS_DELAY(100) SS_TAP(X_ENTER));
-
-    }
-    break;
-    case ST_MACRO_1:
-    if (record->event.pressed) {
-      SEND_STRING(SS_LGUI(SS_TAP(X_SPACE)) SS_DELAY(100) SS_TAP(X_C) SS_DELAY(100) SS_TAP(X_H) SS_DELAY(100) SS_TAP(X_R)  SS_DELAY(100) SS_TAP(X_ENTER));
-
-    }
-    break;
-    case ST_MACRO_2:
-    if (record->event.pressed) {
-      SEND_STRING(SS_LGUI(SS_TAP(X_SPACE)) SS_DELAY(100) SS_TAP(X_I) SS_DELAY(100) SS_TAP(X_T)  SS_DELAY(100) SS_TAP(X_ENTER));
-
-    }
-    break;
-    case ST_MACRO_3:
-    if (record->event.pressed) {
-      SEND_STRING(SS_LGUI(SS_TAP(X_SPACE)) SS_DELAY(100) SS_TAP(X_E) SS_DELAY(100) SS_TAP(X_M)  SS_DELAY(100) SS_TAP(X_ENTER));
-
-    }
-    break;
-    case RGB_SLD:
+    // NOTE(dabrady) These are my first attempt at application-switchers: they rely on Spotlight searches.
+    // TODO(dabrady) Consider leveraging Hammerspoon or some other host-machine software to handle this instead, and just
+    // send a special command from here.
+    case _SLACK_:
       if (record->event.pressed) {
-        rgblight_mode(1);
+        SEND_STRING(SS_SPOTLIGHT SS_DELAY(100) SS_TAP(X_S) SS_DELAY(100) SS_TAP(X_L)  SS_DELAY(100) SS_TAP(X_ENTER));
+
       }
-      return false;
+      break;
+    case _CHROME_:
+      if (record->event.pressed) {
+        SEND_STRING(SS_SPOTLIGHT SS_DELAY(100) SS_TAP(X_C) SS_DELAY(100) SS_TAP(X_H) SS_DELAY(100) SS_TAP(X_R)  SS_DELAY(100) SS_TAP(X_ENTER));
+
+      }
+      break;
+    case _ITERM2_:
+      if (record->event.pressed) {
+        SEND_STRING(SS_SPOTLIGHT SS_DELAY(100) SS_TAP(X_I) SS_DELAY(100) SS_TAP(X_T)  SS_DELAY(100) SS_TAP(X_ENTER));
+
+      }
+      break;
+    case _EMACS_:
+      if (record->event.pressed) {
+        SEND_STRING(SS_SPOTLIGHT SS_DELAY(100) SS_TAP(X_E) SS_DELAY(100) SS_TAP(X_M)  SS_DELAY(100) SS_TAP(X_ENTER));
+
+      }
+      break;
   }
   return true;
 }
