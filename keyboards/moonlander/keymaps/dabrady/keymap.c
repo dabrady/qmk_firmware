@@ -183,19 +183,33 @@ uint8_t dance_0_dance_step(qk_tap_dance_state_t *state);
 void dance_0_finished(qk_tap_dance_state_t *state, void *user_data);
 void dance_0_reset(qk_tap_dance_state_t *state, void *user_data);
 
+// NOTE(dabrady) This function is called on every tap of DANCE_0, and is
+// responsible for handling every tap that isn't part of a known dance.
+//
+// More specifically, it does this:
+// - Nothing for the first two taps in the sequence (which are possible dances
+//   themselves and are interpreted by dance_0_dance_step and handled by
+//   dance_0_finished)
+// - Sends three taps of LGUI(KC_C) on the third tap (this is officially just a
+//   button mash, not a dance)
+// - Sends one tap of LGUI(KC_C) on every subsequent tap of DANCE_0
 void on_dance_0(qk_tap_dance_state_t *state, void *user_data) {
   if(state->count == 3) {
+    // Make up for the last 3 missed taps
     tap_code16(LGUI(KC_C));
     tap_code16(LGUI(KC_C));
     tap_code16(LGUI(KC_C));
-  }
-  if(state->count > 3) {
+  } else if(state->count > 3) {
+    // Keep the taps coming
     tap_code16(LGUI(KC_C));
-  }
+  } else { /* Defer processing of the first two taps, might be a dance */ }
 }
-
+// NOTE(dabrady) This function matches a sequence of taps to a recognized dance.
 uint8_t dance_0_dance_step(qk_tap_dance_state_t *state) {
+  // A single-tap dance
   if (state->count == 1) {
+    // If it was pressed-and-interrupted or pressed-and-released, it's a tap.
+    // Otherwise, it was pressed but never released, and thus is a hold.
     if (state->interrupted || !state->pressed) return SINGLE_TAP;
     else return SINGLE_HOLD;
   } else if (state->count == 2) {
@@ -205,6 +219,8 @@ uint8_t dance_0_dance_step(qk_tap_dance_state_t *state) {
   }
   return MORE_TAPS;
 }
+// NOTE(dabrady) This function is called after a dance has finished (dances
+// are defined as a sequence of taps occurring within a configured time period).
 void dance_0_finished(qk_tap_dance_state_t *state, void *user_data) {
   dance_state.step = dance_0_dance_step(state);
   switch (dance_state.step) {
@@ -212,8 +228,12 @@ void dance_0_finished(qk_tap_dance_state_t *state, void *user_data) {
   case SINGLE_HOLD: register_code16(LGUI(KC_V)); break;
   case DOUBLE_TAP: register_code16(LGUI(KC_X)); break;
   case DOUBLE_SINGLE_TAP: tap_code16(LGUI(KC_C)); register_code16(LGUI(KC_C));
+  case DOUBLE_HOLD:
+  default:
+    break;
   }
 }
+// NOTE(dabrady) This function is called to finalize a dance.
 void dance_0_reset(qk_tap_dance_state_t *state, void *user_data) {
   wait_ms(10);
   switch (dance_state.step) {
@@ -221,6 +241,9 @@ void dance_0_reset(qk_tap_dance_state_t *state, void *user_data) {
   case SINGLE_HOLD: unregister_code16(LGUI(KC_V)); break;
   case DOUBLE_TAP: unregister_code16(LGUI(KC_X)); break;
   case DOUBLE_SINGLE_TAP: unregister_code16(LGUI(KC_C)); break;
+  case DOUBLE_HOLD:
+  default:
+    break;
   }
   dance_state.step = 0;
 }
@@ -230,17 +253,28 @@ uint8_t dance_1_dance_step(qk_tap_dance_state_t *state);
 void dance_1_finished(qk_tap_dance_state_t *state, void *user_data);
 void dance_1_reset(qk_tap_dance_state_t *state, void *user_data);
 
+// NOTE(dabrady) This function is called on every tap of DANCE_1, and is
+// responsible for handling every tap that isn't part of a known dance.
+//
+// More specifically, it does this:
+// - Nothing for the first two taps in the dance (which are possible complete
+//   dances themselves and are interpreted by dance_1_dance_step and handled by
+//   dance_1_finished)
+// - Sends three taps of RGUI(KC_Z) on the third tap (this is officially just a
+//   button mash, not a dance)
+// - Sends one tap of RGUI(KC_Z) on every subsequent tap of DANCE_1
 void on_dance_1(qk_tap_dance_state_t *state, void *user_data) {
   if(state->count == 3) {
+    // Make up for the last 3 missed taps
     tap_code16(RGUI(KC_Z));
     tap_code16(RGUI(KC_Z));
     tap_code16(RGUI(KC_Z));
-  }
-  if(state->count > 3) {
+  } else if(state->count > 3) {
+    // Keep the taps coming
     tap_code16(RGUI(KC_Z));
-  }
+  } else { /* Defer processing of the first two taps, might be a dance */ }
 }
-
+// NOTE(dabrady) This function matches a sequence of taps to a recognized dance.
 uint8_t dance_1_dance_step(qk_tap_dance_state_t *state) {
   if (state->count == 1) {
     if (state->interrupted || !state->pressed) return SINGLE_TAP;
@@ -252,6 +286,8 @@ uint8_t dance_1_dance_step(qk_tap_dance_state_t *state) {
   }
   return MORE_TAPS;
 }
+// NOTE(dabrady) This function is called after a dance has finished (dances
+// are defined as a sequence of taps occurring within a configured time period).
 void dance_1_finished(qk_tap_dance_state_t *state, void *user_data) {
   dance_state.step = dance_1_dance_step(state);
   switch (dance_state.step) {
@@ -259,9 +295,12 @@ void dance_1_finished(qk_tap_dance_state_t *state, void *user_data) {
   case DOUBLE_TAP: register_code16(RGUI(KC_Z)); register_code16(RGUI(KC_Z)); break;
   case DOUBLE_HOLD: register_code16(RGUI(RSFT(KC_Z))); break;
   case DOUBLE_SINGLE_TAP: tap_code16(RGUI(KC_Z)); register_code16(RGUI(KC_Z));
+  case SINGLE_HOLD:
+  default:
+    break;
   }
 }
-
+// NOTE(dabrady) This function is called to finalize a dance.
 void dance_1_reset(qk_tap_dance_state_t *state, void *user_data) {
   wait_ms(10);
   switch (dance_state.step) {
@@ -269,6 +308,9 @@ void dance_1_reset(qk_tap_dance_state_t *state, void *user_data) {
   case DOUBLE_TAP: unregister_code16(RGUI(KC_Z)); break;
   case DOUBLE_HOLD: unregister_code16(RGUI(RSFT(KC_Z))); break;
   case DOUBLE_SINGLE_TAP: unregister_code16(RGUI(KC_Z)); break;
+  case SINGLE_HOLD:
+  default:
+    break;
   }
   dance_state.step = 0;
 }
