@@ -2,6 +2,7 @@
 #include "version.h"
 
 #define KC_MAC_UNDO LGUI(KC_Z)
+#define KC_MAC_REDO LSFT(KC_MAC_UNDO)
 #define KC_MAC_CUT LGUI(KC_X)
 #define KC_MAC_COPY LGUI(KC_C)
 #define KC_MAC_PASTE LGUI(KC_V)
@@ -23,18 +24,22 @@ enum layers {
   PLEBIANS,
 };
 
+// NOTE(dabrady) 'DC' stands for 'dance code'. My own prefix, not a standard.
 enum tap_dance_codes {
-  DANCE_0,
-  DANCE_1,
+  DC_TEXT_MANIP,
+  DC_WHOOPS,
 };
+// NOTE(dabrady) 'TD' stands for 'tap dance'; a QMK standard prefix.
+#define TD_TEXT_MANIP TD(DC_TEXT_MANIP)
+#define TD_WHOOPS TD(DC_WHOOPS)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [BASE] = LAYOUT_moonlander(
-    KC_PERC,   KC_AMPR,   KC_LBRACKET, KC_LCBR, KC_LPRN,   KC_EQUAL, _SLACK_,            TD(DANCE_1),    KC_GRAVE,     KC_RPRN,              KC_RCBR,    KC_RBRACKET, KC_EXLM, KC_HASH,
+    KC_PERC,   KC_AMPR,   KC_LBRACKET, KC_LCBR, KC_LPRN,   KC_EQUAL, _SLACK_,            TD_WHOOPS,    KC_GRAVE,     KC_RPRN,              KC_RCBR,    KC_RBRACKET, KC_EXLM, KC_HASH,
     KC_QUOTE,  KC_SCOLON, KC_COMMA,    KC_DOT,  KC_P,      KC_Y,     _CHROME_,           _______,        KC_F,         KC_G,                 KC_C,       KC_R,        KC_L,    KC_QUES,
     KC_ESCAPE, KC_A,      KC_O,        KC_E,    KC_U,      KC_I,     _ITERM2_,           _EMACS_,     KC_D,         KC_H,                 KC_T,       KC_N,        KC_S,    KC_MINUS,
     KC_LSHIFT, _______,   KC_Q,        KC_J,    KC_K,      KC_X,                                         KC_B,         KC_M,                 KC_W,       KC_V,        KC_Z,    KC_RSHIFT,
-    KC_LCTRL,  KC_LALT,   _______,     _______, KC_BSPACE,           TD(DANCE_0),        RGUI(KC_SPACE),               LT(NUMBERS,KC_SLASH), KC_BSLASH,  _______,     _______, LT(SPECIALS,KC_NO),
+    KC_LCTRL,  KC_LALT,   _______,     _______, KC_BSPACE,           TD_TEXT_MANIP,        RGUI(KC_SPACE),               LT(NUMBERS,KC_SLASH), KC_BSLASH,  _______,     _______, LT(SPECIALS,KC_NO),
                                                         KC_ENTER, KC_LGUI, KC_AT,        KC_DLR, LT(NAVIGATION,KC_TAB), KC_SPACE
   ),
   [NUMBERS] = LAYOUT_moonlander(
@@ -178,34 +183,34 @@ static tap dance_state = {
   .step = 0
 };
 
-void on_dance_0(qk_tap_dance_state_t *state, void *user_data);
-uint8_t dance_0_dance_step(qk_tap_dance_state_t *state);
-void dance_0_finished(qk_tap_dance_state_t *state, void *user_data);
-void dance_0_reset(qk_tap_dance_state_t *state, void *user_data);
+void on_text_manip(qk_tap_dance_state_t *state, void *user_data);
+uint8_t text_manip_dance_step(qk_tap_dance_state_t *state);
+void text_manip_finished(qk_tap_dance_state_t *state, void *user_data);
+void text_manip_reset(qk_tap_dance_state_t *state, void *user_data);
 
-// NOTE(dabrady) This function is called on every tap of DANCE_0, and is
+// NOTE(dabrady) This function is called on every tap of DC_TEXT_MANIP, and is
 // responsible for handling every tap that isn't part of a known dance.
 //
 // More specifically, it does this:
 // - Nothing for the first two taps in the sequence (which are possible dances
-//   themselves and are interpreted by dance_0_dance_step and handled by
-//   dance_0_finished)
-// - Sends three taps of LGUI(KC_C) on the third tap (this is officially just a
+//   themselves and are interpreted by text_manip_dance_step and handled by
+//   text_manip_finished)
+// - Sends three taps of KC_MAC_COPY on the third tap (this is officially just a
 //   button mash, not a dance)
-// - Sends one tap of LGUI(KC_C) on every subsequent tap of DANCE_0
-void on_dance_0(qk_tap_dance_state_t *state, void *user_data) {
+// - Sends one tap of KC_MAC_COPY on every subsequent tap of DC_TEXT_MANIP
+void on_text_manip(qk_tap_dance_state_t *state, void *user_data) {
   if(state->count == 3) {
     // Make up for the last 3 missed taps
-    tap_code16(LGUI(KC_C));
-    tap_code16(LGUI(KC_C));
-    tap_code16(LGUI(KC_C));
+    tap_code16(KC_MAC_COPY);
+    tap_code16(KC_MAC_COPY);
+    tap_code16(KC_MAC_COPY);
   } else if(state->count > 3) {
     // Keep the taps coming
-    tap_code16(LGUI(KC_C));
+    tap_code16(KC_MAC_COPY);
   } else { /* Defer processing of the first two taps, might be a dance */ }
 }
 // NOTE(dabrady) This function matches a sequence of taps to a recognized dance.
-uint8_t dance_0_dance_step(qk_tap_dance_state_t *state) {
+uint8_t text_manip_dance_step(qk_tap_dance_state_t *state) {
   // A single-tap dance
   if (state->count == 1) {
     // If it was pressed-and-interrupted or pressed-and-released, it's a tap.
@@ -221,61 +226,63 @@ uint8_t dance_0_dance_step(qk_tap_dance_state_t *state) {
 }
 // NOTE(dabrady) This function is called after a dance has finished (dances
 // are defined as a sequence of taps occurring within a configured time period).
-void dance_0_finished(qk_tap_dance_state_t *state, void *user_data) {
-  dance_state.step = dance_0_dance_step(state);
+void text_manip_finished(qk_tap_dance_state_t *state, void *user_data) {
+  dance_state.step = text_manip_dance_step(state);
   switch (dance_state.step) {
-  case SINGLE_TAP: register_code16(LGUI(KC_C)); break;
-  case SINGLE_HOLD: register_code16(LGUI(KC_V)); break;
-  case DOUBLE_TAP: register_code16(LGUI(KC_X)); break;
-  case DOUBLE_SINGLE_TAP: tap_code16(LGUI(KC_C)); register_code16(LGUI(KC_C));
+  case SINGLE_TAP: register_code16(KC_MAC_COPY); break;
+  case SINGLE_HOLD: register_code16(KC_MAC_PASTE); break;
+  case DOUBLE_TAP: register_code16(KC_MAC_CUT); break;
+  case DOUBLE_SINGLE_TAP: tap_code16(KC_MAC_COPY); register_code16(KC_MAC_COPY);
   case DOUBLE_HOLD:
+  case MORE_TAPS:
   default:
     break;
   }
 }
 // NOTE(dabrady) This function is called to finalize a dance.
-void dance_0_reset(qk_tap_dance_state_t *state, void *user_data) {
+void text_manip_reset(qk_tap_dance_state_t *state, void *user_data) {
   wait_ms(10);
   switch (dance_state.step) {
-  case SINGLE_TAP: unregister_code16(LGUI(KC_C)); break;
-  case SINGLE_HOLD: unregister_code16(LGUI(KC_V)); break;
-  case DOUBLE_TAP: unregister_code16(LGUI(KC_X)); break;
-  case DOUBLE_SINGLE_TAP: unregister_code16(LGUI(KC_C)); break;
+  case SINGLE_TAP: unregister_code16(KC_MAC_COPY); break;
+  case SINGLE_HOLD: unregister_code16(KC_MAC_PASTE); break;
+  case DOUBLE_TAP: unregister_code16(KC_MAC_CUT); break;
+  case DOUBLE_SINGLE_TAP: unregister_code16(KC_MAC_COPY); break;
   case DOUBLE_HOLD:
+  case MORE_TAPS:
   default:
     break;
   }
   dance_state.step = 0;
 }
 
-void on_dance_1(qk_tap_dance_state_t *state, void *user_data);
-uint8_t dance_1_dance_step(qk_tap_dance_state_t *state);
-void dance_1_finished(qk_tap_dance_state_t *state, void *user_data);
-void dance_1_reset(qk_tap_dance_state_t *state, void *user_data);
+void on_whoops(qk_tap_dance_state_t *state, void *user_data);
+uint8_t whoops_dance_step(qk_tap_dance_state_t *state);
+void whoops_finished(qk_tap_dance_state_t *state, void *user_data);
+void whoops_reset(qk_tap_dance_state_t *state, void *user_data);
 
-// NOTE(dabrady) This function is called on every tap of DANCE_1, and is
+// NOTE(dabrady) This function is called on every tap of DC_WHOOPS, and is
 // responsible for handling every tap that isn't part of a known dance.
 //
 // More specifically, it does this:
 // - Nothing for the first two taps in the dance (which are possible complete
-//   dances themselves and are interpreted by dance_1_dance_step and handled by
-//   dance_1_finished)
-// - Sends three taps of RGUI(KC_Z) on the third tap (this is officially just a
+//   dances themselves and are interpreted by whoops_dance_step and handled by
+//   whoops_finished)
+// - Sends three taps of KC_MAC_UNDO on the third tap (this is officially just a
 //   button mash, not a dance)
-// - Sends one tap of RGUI(KC_Z) on every subsequent tap of DANCE_1
-void on_dance_1(qk_tap_dance_state_t *state, void *user_data) {
+// - Sends one tap of KC_MAC_UNDO on every subsequent tap of DC_WHOOPS
+void on_whoops(qk_tap_dance_state_t *state, void *user_data) {
   if(state->count == 3) {
     // Make up for the last 3 missed taps
-    tap_code16(RGUI(KC_Z));
-    tap_code16(RGUI(KC_Z));
-    tap_code16(RGUI(KC_Z));
+    tap_code16(KC_MAC_UNDO);
+    tap_code16(KC_MAC_UNDO);
+    tap_code16(KC_MAC_UNDO);
   } else if(state->count > 3) {
     // Keep the taps coming
-    tap_code16(RGUI(KC_Z));
+    tap_code16(KC_MAC_UNDO);
   } else { /* Defer processing of the first two taps, might be a dance */ }
 }
 // NOTE(dabrady) This function matches a sequence of taps to a recognized dance.
-uint8_t dance_1_dance_step(qk_tap_dance_state_t *state) {
+uint8_t whoops_dance_step(qk_tap_dance_state_t *state) {
   if (state->count == 1) {
     if (state->interrupted || !state->pressed) return SINGLE_TAP;
     else return SINGLE_HOLD;
@@ -288,27 +295,29 @@ uint8_t dance_1_dance_step(qk_tap_dance_state_t *state) {
 }
 // NOTE(dabrady) This function is called after a dance has finished (dances
 // are defined as a sequence of taps occurring within a configured time period).
-void dance_1_finished(qk_tap_dance_state_t *state, void *user_data) {
-  dance_state.step = dance_1_dance_step(state);
+void whoops_finished(qk_tap_dance_state_t *state, void *user_data) {
+  dance_state.step = whoops_dance_step(state);
   switch (dance_state.step) {
-  case SINGLE_TAP: register_code16(RGUI(KC_Z)); break;
-  case DOUBLE_TAP: register_code16(RGUI(KC_Z)); register_code16(RGUI(KC_Z)); break;
-  case DOUBLE_HOLD: register_code16(RGUI(RSFT(KC_Z))); break;
-  case DOUBLE_SINGLE_TAP: tap_code16(RGUI(KC_Z)); register_code16(RGUI(KC_Z));
+  case SINGLE_TAP: register_code16(KC_MAC_UNDO); break;
+  case DOUBLE_TAP: register_code16(KC_MAC_UNDO); register_code16(KC_MAC_UNDO); break;
+  case DOUBLE_HOLD: register_code16(KC_MAC_REDO); break;
+  case DOUBLE_SINGLE_TAP: tap_code16(KC_MAC_UNDO); register_code16(KC_MAC_UNDO);
   case SINGLE_HOLD:
+  case MORE_TAPS:
   default:
     break;
   }
 }
 // NOTE(dabrady) This function is called to finalize a dance.
-void dance_1_reset(qk_tap_dance_state_t *state, void *user_data) {
+void whoops_reset(qk_tap_dance_state_t *state, void *user_data) {
   wait_ms(10);
   switch (dance_state.step) {
-  case SINGLE_TAP: unregister_code16(RGUI(KC_Z)); break;
-  case DOUBLE_TAP: unregister_code16(RGUI(KC_Z)); break;
-  case DOUBLE_HOLD: unregister_code16(RGUI(RSFT(KC_Z))); break;
-  case DOUBLE_SINGLE_TAP: unregister_code16(RGUI(KC_Z)); break;
+  case SINGLE_TAP: unregister_code16(KC_MAC_UNDO); break;
+  case DOUBLE_TAP: unregister_code16(KC_MAC_UNDO); break;
+  case DOUBLE_HOLD: unregister_code16(KC_MAC_REDO); break;
+  case DOUBLE_SINGLE_TAP: unregister_code16(KC_MAC_UNDO); break;
   case SINGLE_HOLD:
+  case MORE_TAPS:
   default:
     break;
   }
@@ -316,6 +325,6 @@ void dance_1_reset(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-  [DANCE_0] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_0, dance_0_finished, dance_0_reset),
-  [DANCE_1] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_1, dance_1_finished, dance_1_reset),
+  [DC_TEXT_MANIP] = ACTION_TAP_DANCE_FN_ADVANCED(on_text_manip, text_manip_finished, text_manip_reset),
+  [DC_WHOOPS] = ACTION_TAP_DANCE_FN_ADVANCED(on_whoops, whoops_finished, whoops_reset),
 };
