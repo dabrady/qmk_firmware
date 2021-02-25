@@ -80,15 +80,15 @@ void keyboard_post_init_user(void) {
 
 // TODO(dabrady) Reformat for readability like the above.
 const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
-    [BASE] = { {179,164,153}, {179,164,153}, {179,164,153}, {0,204,255}, {0,204,255}, {179,164,153}, {179,164,153}, {179,164,153}, {179,164,153}, {0,204,255}, {179,164,153}, {179,164,153}, {179,164,153}, {179,164,153}, {0,204,255}, {179,164,153}, {179,164,153}, {179,164,153}, {179,164,153}, {0,204,255}, {179,164,153}, {179,164,153}, {179,164,153}, {179,164,153}, {0,204,255}, {179,164,153}, {179,164,153}, {179,164,153}, {179,164,153}, {146,224,255}, {146,224,255}, {146,224,255}, {0,204,255}, {0,204,255}, {0,204,255}, {0,0,255}, {179,164,153}, {179,164,153}, {179,164,153}, {0,204,255}, {0,204,255}, {179,164,153}, {179,164,153}, {179,164,153}, {179,164,153}, {0,204,255}, {179,164,153}, {179,164,153}, {179,164,153}, {179,164,153}, {0,204,255}, {179,164,153}, {179,164,153}, {179,164,153}, {179,164,153}, {0,204,255}, {179,164,153}, {179,164,153}, {179,164,153}, {179,164,153}, {0,204,255}, {179,164,153}, {179,164,153}, {179,164,153}, {179,164,153}, {14,255,255}, {146,224,255}, {146,224,255}, {0,204,255}, {0,204,255}, {0,204,255}, {0,0,255} },
+  [BASE] = { {179,164,153}, {179,164,153}, {179,164,153}, {0,204,255}, {0,204,255}, {179,164,153}, {179,164,153}, {179,164,153}, {179,164,153}, {0,204,255}, {179,164,153}, {179,164,153}, {179,164,153}, {179,164,153}, {0,204,255}, {179,164,153}, {179,164,153}, {179,164,153}, {179,164,153}, {0,204,255}, {179,164,153}, {179,164,153}, {179,164,153}, {179,164,153}, {0,204,255}, {179,164,153}, {179,164,153}, {179,164,153}, {179,164,153}, {146,224,255}, {146,224,255}, {146,224,255}, {0,204,255}, {0,204,255}, {0,204,255}, {0,0,255}, {179,164,153}, {179,164,153}, {179,164,153}, {0,204,255}, {0,204,255}, {179,164,153}, {179,164,153}, {179,164,153}, {179,164,153}, {0,204,255}, {179,164,153}, {179,164,153}, {179,164,153}, {179,164,153}, {0,204,255}, {179,164,153}, {179,164,153}, {179,164,153}, {179,164,153}, {0,204,255}, {179,164,153}, {179,164,153}, {179,164,153}, {179,164,153}, {0,204,255}, {179,164,153}, {179,164,153}, {179,164,153}, {179,164,153}, {14,255,255}, {146,224,255}, {146,224,255}, {0,204,255}, {0,204,255}, {0,204,255}, {0,0,255} },
 
-    [NUMBERS] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {91,245,251}, {141,255,233}, {91,245,251}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {91,245,251}, {141,255,233}, {91,245,251}, {0,0,0}, {0,0,0}, {0,0,0}, {0,204,255}, {0,0,0}, {0,0,0}, {0,0,0} },
+  [NUMBERS] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {91,245,251}, {141,255,233}, {91,245,251}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {91,245,251}, {141,255,233}, {91,245,251}, {0,0,0}, {0,0,0}, {0,0,0}, {0,204,255}, {0,0,0}, {0,0,0}, {0,0,0} },
 
-    [NAVIGATION] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {85,203,158}, {85,203,158}, {0,0,0}, {0,0,0}, {0,0,0}, {85,203,158}, {85,203,158}, {0,0,0}, {0,0,0}, {0,0,0}, {85,203,158}, {85,203,158}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,204,255}, {0,0,0}, {0,0,0} },
+  [NAVIGATION] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {141,255,233}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {85,203,158}, {85,203,158}, {0,0,0}, {0,0,0}, {0,0,0}, {85,203,158}, {85,203,158}, {0,0,0}, {0,0,0}, {0,0,0}, {85,203,158}, {85,203,158}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,204,255}, {0,0,0}, {0,0,0} },
 
-    [SPECIALS] = { {0,205,155}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {0,0,0}, {0,0,0}, {33,255,255}, {33,255,255}, {33,255,255}, {0,204,255}, {33,255,255}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {14,255,255}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {33,255,255}, {0,0,0}, {33,255,255}, {33,255,255}, {33,255,255}, {33,255,255} },
+  [SPECIALS] = { {0,205,155}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {0,0,0}, {0,0,0}, {33,255,255}, {33,255,255}, {33,255,255}, {0,204,255}, {33,255,255}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {14,255,255}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {33,255,255}, {0,0,0}, {33,255,255}, {33,255,255}, {33,255,255}, {33,255,255} },
 
-    [PLEBIANS] = { {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,205,155}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255} },
+  [PLEBIANS] = { {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,205,155}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255} },
 
 };
 
@@ -100,11 +100,11 @@ void set_layer_color(int layer) {
       .v = pgm_read_byte(&ledmap[layer][i][2]),
     };
     if (!hsv.h && !hsv.s && !hsv.v) {
-        rgb_matrix_set_color( i, 0, 0, 0 );
+      rgb_matrix_set_color( i, 0, 0, 0 );
     } else {
-        RGB rgb = hsv_to_rgb( hsv );
-        float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
-        rgb_matrix_set_color( i, f * rgb.r, f * rgb.g, f * rgb.b );
+      RGB rgb = hsv_to_rgb( hsv );
+      float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
+      rgb_matrix_set_color( i, f * rgb.r, f * rgb.g, f * rgb.b );
     }
   }
 }
@@ -114,10 +114,10 @@ void rgb_matrix_indicators_user(void) {
 
   uint8_t layer = biton32(layer_state);
   switch (layer) {
-    case BASE ... PLEBIANS:
-      set_layer_color(layer);
-      break;
-   default:
+  case BASE ... PLEBIANS:
+    set_layer_color(layer);
+    break;
+  default:
     if (rgb_matrix_get_flags() == LED_FLAG_NONE) {
       rgb_matrix_set_color_all(0, 0, 0);
     }
@@ -128,54 +128,54 @@ void rgb_matrix_indicators_user(void) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   // Handle macros and other specials
   switch (keycode) {
-    // NOTE(dabrady) These are my first attempt at application-switchers: they rely on Spotlight searches.
-    // TODO(dabrady) Consider leveraging Hammerspoon or some other host-machine software to handle this instead, and just
-    // send a special command from here.
-    case _SLACK_:
-      if (record->event.pressed) {
-        SEND_STRING(SS_SPOTLIGHT SS_DELAY(100) SS_TAP(X_S) SS_DELAY(100) SS_TAP(X_L)  SS_DELAY(100) SS_TAP(X_ENTER));
+  // NOTE(dabrady) These are my first attempt at application-switchers: they rely on Spotlight searches.
+  // TODO(dabrady) Consider leveraging Hammerspoon or some other host-machine software to handle this instead, and just
+  // send a special command from here.
+  case _SLACK_:
+    if (record->event.pressed) {
+      SEND_STRING(SS_SPOTLIGHT SS_DELAY(100) SS_TAP(X_S) SS_DELAY(100) SS_TAP(X_L)  SS_DELAY(100) SS_TAP(X_ENTER));
 
-      }
-      break;
-    case _CHROME_:
-      if (record->event.pressed) {
-        SEND_STRING(SS_SPOTLIGHT SS_DELAY(100) SS_TAP(X_C) SS_DELAY(100) SS_TAP(X_H) SS_DELAY(100) SS_TAP(X_R)  SS_DELAY(100) SS_TAP(X_ENTER));
+    }
+    break;
+  case _CHROME_:
+    if (record->event.pressed) {
+      SEND_STRING(SS_SPOTLIGHT SS_DELAY(100) SS_TAP(X_C) SS_DELAY(100) SS_TAP(X_H) SS_DELAY(100) SS_TAP(X_R)  SS_DELAY(100) SS_TAP(X_ENTER));
 
-      }
-      break;
-    case _ITERM2_:
-      if (record->event.pressed) {
-        SEND_STRING(SS_SPOTLIGHT SS_DELAY(100) SS_TAP(X_I) SS_DELAY(100) SS_TAP(X_T)  SS_DELAY(100) SS_TAP(X_ENTER));
+    }
+    break;
+  case _ITERM2_:
+    if (record->event.pressed) {
+      SEND_STRING(SS_SPOTLIGHT SS_DELAY(100) SS_TAP(X_I) SS_DELAY(100) SS_TAP(X_T)  SS_DELAY(100) SS_TAP(X_ENTER));
 
-      }
-      break;
-    case _EMACS_:
-      if (record->event.pressed) {
-        SEND_STRING(SS_SPOTLIGHT SS_DELAY(100) SS_TAP(X_E) SS_DELAY(100) SS_TAP(X_M)  SS_DELAY(100) SS_TAP(X_ENTER));
+    }
+    break;
+  case _EMACS_:
+    if (record->event.pressed) {
+      SEND_STRING(SS_SPOTLIGHT SS_DELAY(100) SS_TAP(X_E) SS_DELAY(100) SS_TAP(X_M)  SS_DELAY(100) SS_TAP(X_ENTER));
 
-      }
-      break;
+    }
+    break;
   }
   return true;
 }
 
 typedef struct {
-    bool is_press_action;
-    uint8_t step;
+  bool is_press_action;
+  uint8_t step;
 } tap;
 
 enum {
-    SINGLE_TAP = 1,
-    SINGLE_HOLD,
-    DOUBLE_TAP,
-    DOUBLE_HOLD,
-    DOUBLE_SINGLE_TAP,
-    MORE_TAPS
+  SINGLE_TAP = 1,
+  SINGLE_HOLD,
+  DOUBLE_TAP,
+  DOUBLE_HOLD,
+  DOUBLE_SINGLE_TAP,
+  MORE_TAPS
 };
 
 static tap dance_state = {
-    .is_press_action = true,
-    .step = 0
+  .is_press_action = true,
+  .step = 0
 };
 
 void on_dance_0(qk_tap_dance_state_t *state, void *user_data);
@@ -184,96 +184,96 @@ void dance_0_finished(qk_tap_dance_state_t *state, void *user_data);
 void dance_0_reset(qk_tap_dance_state_t *state, void *user_data);
 
 void on_dance_0(qk_tap_dance_state_t *state, void *user_data) {
-    if(state->count == 3) {
-        tap_code16(LGUI(KC_C));
-        tap_code16(LGUI(KC_C));
-        tap_code16(LGUI(KC_C));
-    }
-    if(state->count > 3) {
-        tap_code16(LGUI(KC_C));
-    }
+  if(state->count == 3) {
+    tap_code16(LGUI(KC_C));
+    tap_code16(LGUI(KC_C));
+    tap_code16(LGUI(KC_C));
+  }
+  if(state->count > 3) {
+    tap_code16(LGUI(KC_C));
+  }
 }
 
 uint8_t dance_0_dance_step(qk_tap_dance_state_t *state) {
-    if (state->count == 1) {
-        if (state->interrupted || !state->pressed) return SINGLE_TAP;
-        else return SINGLE_HOLD;
-    } else if (state->count == 2) {
-        if (state->interrupted) return DOUBLE_SINGLE_TAP;
-        else if (state->pressed) return DOUBLE_HOLD;
-        else return DOUBLE_TAP;
-    }
-    return MORE_TAPS;
+  if (state->count == 1) {
+    if (state->interrupted || !state->pressed) return SINGLE_TAP;
+    else return SINGLE_HOLD;
+  } else if (state->count == 2) {
+    if (state->interrupted) return DOUBLE_SINGLE_TAP;
+    else if (state->pressed) return DOUBLE_HOLD;
+    else return DOUBLE_TAP;
+  }
+  return MORE_TAPS;
 }
 void dance_0_finished(qk_tap_dance_state_t *state, void *user_data) {
-    dance_state.step = dance_0_dance_step(state);
-    switch (dance_state.step) {
-        case SINGLE_TAP: register_code16(LGUI(KC_C)); break;
-        case SINGLE_HOLD: register_code16(LGUI(KC_V)); break;
-        case DOUBLE_TAP: register_code16(LGUI(KC_X)); break;
-        case DOUBLE_SINGLE_TAP: tap_code16(LGUI(KC_C)); register_code16(LGUI(KC_C));
-    }
+  dance_state.step = dance_0_dance_step(state);
+  switch (dance_state.step) {
+  case SINGLE_TAP: register_code16(LGUI(KC_C)); break;
+  case SINGLE_HOLD: register_code16(LGUI(KC_V)); break;
+  case DOUBLE_TAP: register_code16(LGUI(KC_X)); break;
+  case DOUBLE_SINGLE_TAP: tap_code16(LGUI(KC_C)); register_code16(LGUI(KC_C));
+  }
+}
+void dance_0_reset(qk_tap_dance_state_t *state, void *user_data) {
+  wait_ms(10);
+  switch (dance_state.step) {
+  case SINGLE_TAP: unregister_code16(LGUI(KC_C)); break;
+  case SINGLE_HOLD: unregister_code16(LGUI(KC_V)); break;
+  case DOUBLE_TAP: unregister_code16(LGUI(KC_X)); break;
+  case DOUBLE_SINGLE_TAP: unregister_code16(LGUI(KC_C)); break;
+  }
+  dance_state.step = 0;
 }
 
-void dance_0_reset(qk_tap_dance_state_t *state, void *user_data) {
-    wait_ms(10);
-    switch (dance_state.step) {
-        case SINGLE_TAP: unregister_code16(LGUI(KC_C)); break;
-        case SINGLE_HOLD: unregister_code16(LGUI(KC_V)); break;
-        case DOUBLE_TAP: unregister_code16(LGUI(KC_X)); break;
-        case DOUBLE_SINGLE_TAP: unregister_code16(LGUI(KC_C)); break;
-    }
-    dance_state.step = 0;
-}
 void on_dance_1(qk_tap_dance_state_t *state, void *user_data);
 uint8_t dance_1_dance_step(qk_tap_dance_state_t *state);
 void dance_1_finished(qk_tap_dance_state_t *state, void *user_data);
 void dance_1_reset(qk_tap_dance_state_t *state, void *user_data);
 
 void on_dance_1(qk_tap_dance_state_t *state, void *user_data) {
-    if(state->count == 3) {
-        tap_code16(RGUI(KC_Z));
-        tap_code16(RGUI(KC_Z));
-        tap_code16(RGUI(KC_Z));
-    }
-    if(state->count > 3) {
-        tap_code16(RGUI(KC_Z));
-    }
+  if(state->count == 3) {
+    tap_code16(RGUI(KC_Z));
+    tap_code16(RGUI(KC_Z));
+    tap_code16(RGUI(KC_Z));
+  }
+  if(state->count > 3) {
+    tap_code16(RGUI(KC_Z));
+  }
 }
 
 uint8_t dance_1_dance_step(qk_tap_dance_state_t *state) {
-    if (state->count == 1) {
-        if (state->interrupted || !state->pressed) return SINGLE_TAP;
-        else return SINGLE_HOLD;
-    } else if (state->count == 2) {
-        if (state->interrupted) return DOUBLE_SINGLE_TAP;
-        else if (state->pressed) return DOUBLE_HOLD;
-        else return DOUBLE_TAP;
-    }
-    return MORE_TAPS;
+  if (state->count == 1) {
+    if (state->interrupted || !state->pressed) return SINGLE_TAP;
+    else return SINGLE_HOLD;
+  } else if (state->count == 2) {
+    if (state->interrupted) return DOUBLE_SINGLE_TAP;
+    else if (state->pressed) return DOUBLE_HOLD;
+    else return DOUBLE_TAP;
+  }
+  return MORE_TAPS;
 }
 void dance_1_finished(qk_tap_dance_state_t *state, void *user_data) {
-    dance_state.step = dance_1_dance_step(state);
-    switch (dance_state.step) {
-        case SINGLE_TAP: register_code16(RGUI(KC_Z)); break;
-        case DOUBLE_TAP: register_code16(RGUI(KC_Z)); register_code16(RGUI(KC_Z)); break;
-        case DOUBLE_HOLD: register_code16(RGUI(RSFT(KC_Z))); break;
-        case DOUBLE_SINGLE_TAP: tap_code16(RGUI(KC_Z)); register_code16(RGUI(KC_Z));
-    }
+  dance_state.step = dance_1_dance_step(state);
+  switch (dance_state.step) {
+  case SINGLE_TAP: register_code16(RGUI(KC_Z)); break;
+  case DOUBLE_TAP: register_code16(RGUI(KC_Z)); register_code16(RGUI(KC_Z)); break;
+  case DOUBLE_HOLD: register_code16(RGUI(RSFT(KC_Z))); break;
+  case DOUBLE_SINGLE_TAP: tap_code16(RGUI(KC_Z)); register_code16(RGUI(KC_Z));
+  }
 }
 
 void dance_1_reset(qk_tap_dance_state_t *state, void *user_data) {
-    wait_ms(10);
-    switch (dance_state.step) {
-        case SINGLE_TAP: unregister_code16(RGUI(KC_Z)); break;
-        case DOUBLE_TAP: unregister_code16(RGUI(KC_Z)); break;
-        case DOUBLE_HOLD: unregister_code16(RGUI(RSFT(KC_Z))); break;
-        case DOUBLE_SINGLE_TAP: unregister_code16(RGUI(KC_Z)); break;
-    }
-    dance_state.step = 0;
+  wait_ms(10);
+  switch (dance_state.step) {
+  case SINGLE_TAP: unregister_code16(RGUI(KC_Z)); break;
+  case DOUBLE_TAP: unregister_code16(RGUI(KC_Z)); break;
+  case DOUBLE_HOLD: unregister_code16(RGUI(RSFT(KC_Z))); break;
+  case DOUBLE_SINGLE_TAP: unregister_code16(RGUI(KC_Z)); break;
+  }
+  dance_state.step = 0;
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-        [DANCE_0] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_0, dance_0_finished, dance_0_reset),
-        [DANCE_1] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_1, dance_1_finished, dance_1_reset),
+  [DANCE_0] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_0, dance_0_finished, dance_0_reset),
+  [DANCE_1] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_1, dance_1_finished, dance_1_reset),
 };
