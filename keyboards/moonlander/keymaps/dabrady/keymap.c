@@ -1,5 +1,13 @@
 #include QMK_KEYBOARD_H
+#include "print.h"
 #include "version.h"
+
+/** Keylogger stuff **/
+extern bool mcp23018_leds[3]; // NOTE(dabrady) Defined in moonlander.h, needed for manual manip of status LEDs.
+float LOG_ON_SONG[][2] = SONG( DVORAK_SOUND );
+float LOG_OFF_SONG[][2] = SONG( QWERTY_SOUND );
+static bool KEYLOGGER_ENABLED = false;
+/** *************** **/
 
 #define KC_MAC_UNDO LGUI(KC_Z)
 #define KC_MAC_REDO LSFT(KC_MAC_UNDO)
@@ -14,6 +22,7 @@ enum custom_keycodes {
   _CHROME_,
   _ITERM2_,
   _EMACS_,
+  _LOG_,
 };
 
 enum layers {
@@ -63,7 +72,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     WEBUSB_PAIR, _______, _______,     _______, _______,   _______,  _______,            RGB_TOG,            _______,  _______,       _______,    _______,     _______,      KC_F12,
     _______,     _______, _______,     _______, _______,   _______,  _______,            _______,            _______,  _______,       _______,    _______,     _______,      _______,
     _______,     _______, _______,     _______, _______,   _______,                                          _______,  _______,       _______,    _______,     _______,      _______,
-    _______,     _______, _______,     _______, _______,       KC_AUDIO_MUTE,            _______,                      _______,       _______,    _______,     TO(PLEBIANS), _______,
+    _______,     _______, _______,     _______, _______,       KC_AUDIO_MUTE,            _LOG_,                      _______,       _______,    _______,     TO(PLEBIANS), _______,
                                          _______, _______, KC_AUDIO_VOL_DOWN,            KC_AUDIO_VOL_UP, _______, _______
   ),
   [PLEBIANS] = LAYOUT_moonlander(
@@ -131,6 +140,18 @@ void rgb_matrix_indicators_user(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  // NOTE(dabrady) I'm logging my usage data for later analysis.
+  ML_LED_6(KEYLOGGER_ENABLED? true : false); // Simple logging indicator light
+  if (KEYLOGGER_ENABLED) {
+    if (record->event.pressed) {
+      uprintf("{ \"keycode\": %#04x, \"row\": %d, \"col\": %d, \"time\": %d}\n",
+              keycode,
+              record->event.key.row,
+              record->event.key.col,
+              record->event.time);
+    }
+  }
+
   // Handle macros and other specials
   switch (keycode) {
   // NOTE(dabrady) These are my first attempt at application-switchers: they rely on Spotlight searches.
@@ -160,6 +181,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     }
     break;
+  case _LOG_:
+    if (record->event.pressed) {
+      KEYLOGGER_ENABLED = !KEYLOGGER_ENABLED;
+      if (KEYLOGGER_ENABLED) {
+        PLAY_SONG(LOG_ON_SONG);
+      } else {
+        PLAY_SONG(LOG_OFF_SONG);
+      }
+    }
+    return false; // Don't allow further processing
+  default: break;
   }
   return true;
 }

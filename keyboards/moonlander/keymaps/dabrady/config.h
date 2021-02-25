@@ -8,3 +8,8 @@
 
 #define FIRMWARE_VERSION u8"60lbl/34o0G"
 #define RGB_MATRIX_STARTUP_SPD 60
+
+// Allow use of `uprintf` ("user printf") but don't enable debug logging
+// NOTE(dabrady) I'm using `uprintf` to implement a keylogger.
+#define NO_DEBUG
+#define USER_PRINT
