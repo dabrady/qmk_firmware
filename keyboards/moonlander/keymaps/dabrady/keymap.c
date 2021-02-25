@@ -165,11 +165,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 typedef struct {
-  bool is_press_action;
   uint8_t step;
 } tap;
 
-enum {
+enum dance_steps {
   SINGLE_TAP = 1,
   SINGLE_HOLD,
   DOUBLE_TAP,
@@ -178,9 +177,14 @@ enum {
   MORE_TAPS
 };
 
-static tap dance_state = {
-  .is_press_action = true,
-  .step = 0
+// NOTE(dabrady) Global state map of tap dance keys. (Gross, but functional.)
+static tap dance_states[] = {
+  [DC_TEXT_MANIP] = {
+    .step = 0
+  },
+  [DC_WHOOPS] = {
+    .step = 0
+  }
 };
 
 void on_text_manip(qk_tap_dance_state_t *state, void *user_data);
@@ -227,8 +231,8 @@ uint8_t text_manip_dance_step(qk_tap_dance_state_t *state) {
 // NOTE(dabrady) This function is called after a dance has finished (dances
 // are defined as a sequence of taps occurring within a configured time period).
 void text_manip_finished(qk_tap_dance_state_t *state, void *user_data) {
-  dance_state.step = text_manip_dance_step(state);
-  switch (dance_state.step) {
+  dance_states[DC_TEXT_MANIP].step = text_manip_dance_step(state);
+  switch (dance_states[DC_TEXT_MANIP].step) {
   case SINGLE_TAP: register_code16(KC_MAC_COPY); break;
   case SINGLE_HOLD: register_code16(KC_MAC_PASTE); break;
   case DOUBLE_TAP: register_code16(KC_MAC_CUT); break;
@@ -242,7 +246,7 @@ void text_manip_finished(qk_tap_dance_state_t *state, void *user_data) {
 // NOTE(dabrady) This function is called to finalize a dance.
 void text_manip_reset(qk_tap_dance_state_t *state, void *user_data) {
   wait_ms(10);
-  switch (dance_state.step) {
+  switch (dance_states[DC_TEXT_MANIP].step) {
   case SINGLE_TAP: unregister_code16(KC_MAC_COPY); break;
   case SINGLE_HOLD: unregister_code16(KC_MAC_PASTE); break;
   case DOUBLE_TAP: unregister_code16(KC_MAC_CUT); break;
@@ -252,7 +256,7 @@ void text_manip_reset(qk_tap_dance_state_t *state, void *user_data) {
   default:
     break;
   }
-  dance_state.step = 0;
+  dance_states[DC_TEXT_MANIP].step = 0;
 }
 
 void on_whoops(qk_tap_dance_state_t *state, void *user_data);
@@ -296,8 +300,8 @@ uint8_t whoops_dance_step(qk_tap_dance_state_t *state) {
 // NOTE(dabrady) This function is called after a dance has finished (dances
 // are defined as a sequence of taps occurring within a configured time period).
 void whoops_finished(qk_tap_dance_state_t *state, void *user_data) {
-  dance_state.step = whoops_dance_step(state);
-  switch (dance_state.step) {
+  dance_states[DC_WHOOPS].step = whoops_dance_step(state);
+  switch (dance_states[DC_WHOOPS].step) {
   case SINGLE_TAP: register_code16(KC_MAC_UNDO); break;
   case DOUBLE_TAP: register_code16(KC_MAC_UNDO); register_code16(KC_MAC_UNDO); break;
   case DOUBLE_HOLD: register_code16(KC_MAC_REDO); break;
@@ -311,7 +315,7 @@ void whoops_finished(qk_tap_dance_state_t *state, void *user_data) {
 // NOTE(dabrady) This function is called to finalize a dance.
 void whoops_reset(qk_tap_dance_state_t *state, void *user_data) {
   wait_ms(10);
-  switch (dance_state.step) {
+  switch (dance_states[DC_WHOOPS].step) {
   case SINGLE_TAP: unregister_code16(KC_MAC_UNDO); break;
   case DOUBLE_TAP: unregister_code16(KC_MAC_UNDO); break;
   case DOUBLE_HOLD: unregister_code16(KC_MAC_REDO); break;
@@ -321,7 +325,7 @@ void whoops_reset(qk_tap_dance_state_t *state, void *user_data) {
   default:
     break;
   }
-  dance_state.step = 0;
+  dance_states[DC_WHOOPS].step = 0;
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
