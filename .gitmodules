@@ -21,3 +21,6 @@
 [submodule "lib/pico-sdk"]
 	path = lib/pico-sdk
 	url = https://github.com/qmk/pico-sdk.git
+[submodule "lib/ugfx"]
+	path = lib/ugfx
+	url = https://github.com/qmk/uGFX
